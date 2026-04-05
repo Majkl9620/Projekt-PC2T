@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public abstract class Zamestnanec {
     private int id;
-    private String jmeno;
-    private String prijmeni;
-    private int rok_narozeni;
-    private ArrayList<Spoluprace> spoluprace;
+    private final String jmeno;
+    private final String prijmeni;
+    private final int rok_narozeni;
+    private final ArrayList<Spoluprace> spoluprace;
 
     public Zamestnanec(String jmeno, String prijmeni, int rok_narozeni) {
         this.jmeno = jmeno;
@@ -26,24 +26,12 @@ public abstract class Zamestnanec {
         return jmeno;
     }
 
-    public void setJmeno(String jmeno) {
-        this.jmeno = jmeno;
-    }
-
     public String getPrijmeni() {
         return prijmeni;
     }
 
-    public void setPrijmeni(String prijmeni) {
-        this.prijmeni = prijmeni;
-    }
-
     public int getRok_narozeni() {
         return rok_narozeni;
-    }
-
-    public void setRok_narozeni(int rok_narozeni) {
-        this.rok_narozeni = rok_narozeni;
     }
 
     public ArrayList<Spoluprace> getSpoluprace(){

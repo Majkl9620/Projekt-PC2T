@@ -33,7 +33,8 @@ static void main() {
             System.out.println("4 ... Vyhledání zaměstnance");
             System.out.println("5 ... Spuštění dovednosti zaměstnance");
             System.out.println("6 ... Výpis zaměstnanců");
-            System.out.println("7 ... Ukončit program");
+            System.out.println("7 ... Vypsat statistiky");
+            System.out.println("8 ... Ukončit program");
 
             volba = pouzeCelaCisla(sc);
             switch (volba) {
@@ -72,7 +73,7 @@ static void main() {
                     System.out.println("Úrovně spolupráce: (1)SPATNA\t(2)PRUMERNA\t(3)DOBRA");
                     System.out.print("Zadejte úroveň spolupráce: ");
                     podVolba = pouzeCelaCisla(sc);
-                    UrovenSpoluprace[] us = UrovenSpoluprace.values();
+                    KvalitaSpoluprace[] us = KvalitaSpoluprace.values();
                     if (podVolba >= 1 && podVolba <= us.length) {
                         databazeZamestnancu.pridatSpolupraci(z, k, us[podVolba - 1]);
                     } else {
@@ -85,20 +86,20 @@ static void main() {
                     if (vz == null) {
                         System.out.println("Zaměstnanec nenalezen");
                     } else {
-                        System.out.print("ID: " + vz.getId());
-                        System.out.print("\tJméno: " + vz.getJmeno() + " " + vz.getPrijmeni());
-                        System.out.print("\tRok narození: " + vz.getRok_narozeni());
-                        System.out.println("\nSpolupráce:\n");
-                        for (Spoluprace s : vz.getSpoluprace()) {
-                            System.out.println("\t" + s.getZamestnanec().getJmeno() + " " + s.getZamestnanec().getPrijmeni() + ": " + s.getUrovenSpoluprace());
-                        }
+                        databazeZamestnancu.vypsatZamestnance(vz);
                     }
                     break;
                 case 5:
+                    System.out.print("Zadejte ID zaměstnance: ");
+                    databazeZamestnancu.getDovednost(pouzeCelaCisla(sc));
                     break;
                 case 6:
+                    databazeZamestnancu.vypsatVsechnyZamestnance();
                     break;
                 case 7:
+                    databazeZamestnancu.vypsatStatistiky();
+                    break;
+                case 8:
                     run = false;
                     break;
             }

@@ -1,17 +1,17 @@
 public class Spoluprace {
-    private Zamestnanec zamestnanec;
-    private UrovenSpoluprace urovenSpoluprace;
+    private final Zamestnanec zamestnanec;
+    private final KvalitaSpoluprace kvalitaSpoluprace;
 
-    public Spoluprace(Zamestnanec zamestnanec, UrovenSpoluprace urovenSpoluprace) {
+    public Spoluprace(Zamestnanec zamestnanec, KvalitaSpoluprace kvalitaSpoluprace) {
         this.zamestnanec = zamestnanec;
-        this.urovenSpoluprace = urovenSpoluprace;
+        this.kvalitaSpoluprace = kvalitaSpoluprace;
     }
 
     public Zamestnanec getZamestnanec() {
         return zamestnanec;
     }
 
-    public UrovenSpoluprace getUrovenSpoluprace() {
-        return urovenSpoluprace;
+    public KvalitaSpoluprace getKvalitaSpoluprace() {
+        return kvalitaSpoluprace;
     }
 }

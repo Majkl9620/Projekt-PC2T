@@ -1,4 +1,4 @@
-public enum UrovenSpoluprace {
+public enum KvalitaSpoluprace {
     SPATNA,
     PRUMERNA,
     DOBRA
