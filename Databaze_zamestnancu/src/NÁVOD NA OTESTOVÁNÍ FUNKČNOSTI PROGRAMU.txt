@@ -1,0 +1,26 @@
+1. fáze testování: plnění  databáze zaměstnanci
+	1, 1, Jan, Novák, 1985
+	1, 2, Petr, Svoboda, 1985
+	1, 2, Adam Kratky, 1995
+	6 (výpis), zkontrolovat: Adam Krátký musí být ve výpisu specialistů vypsaný PŘED Petrem Svobodou.
+				 Dole musí být správné součty lidé ve skupinách.
+
+
+2. fáze testování: vytváření vazeb a dovedností
+	3, 1, 2, 3
+	3, 2, 1, 3
+	3, 2, 3, 1
+	5 (dovednosti) a zadej ID 2 (Specialista Petr), zkontrolovat: sedí výpočet rizikového skóre
+	7 (statistiky) zkontrolovat: program by měl napsat, že nejvíce vazeb má Petr Svoboda (2) a že jeho kvalita je dobrá
+
+3. fáze testování otestování funkčnosti souborů
+	9, zadej ID 3 (Adam) a dej název souboru třeba Adam.dat
+	2, smazání ID 3 (Adam)
+	6, ve výpisu by Adam NEMĚL být
+	10, zadej název souboru podle uložení, tady "Adam.dat"
+	6, Adam by ve výpisu měl mít opět svoje původní ID a program nesmí spadnout!
+
+4. fáze testování: testování funkčnosti SQL
+	8, ukončení programu
+	zapni program
+	6, (výpis), zkontrolovat, že všichni zaměstnanci jsou součásti a mají všichni svoje ID, spolupráce a dovednosti
