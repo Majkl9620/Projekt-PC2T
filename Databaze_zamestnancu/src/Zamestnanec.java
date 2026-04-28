@@ -1,6 +1,7 @@
-import java.util.ArrayList implements java.io.Serializable;
+import java.util.ArrayList;
+import java.io.Serializable;
 
-public abstract class Zamestnanec {
+public abstract class Zamestnanec implements Serializable {
     private int id;
     private final String jmeno;
     private final String prijmeni;

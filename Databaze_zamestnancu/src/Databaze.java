@@ -116,8 +116,10 @@ public class Databaze {
                 }
             }
             if (nejviceS != null && maxPocetS > 0) {
-                System.out.println("Nejvíce vazeb má zaměstnanec " + nejviceS.getJmeno() + " " + nejviceS.getPrijmeni() + " (celkem " + maxPocetS + " vazeb).");
-    }
+                System.out.println("Nejvíce vazeb má zaměstnanec " + nejviceS.getJmeno() + " " + nejviceS.getPrijmeni() + " (celkem " + maxPocetS + "vazeb).");
+            }
+            }
+        }
     public Map<Integer, Zamestnanec> getPrvkyDatabaze() {
     return prvkyDatabaze;
     }
