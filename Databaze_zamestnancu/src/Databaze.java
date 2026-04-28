@@ -71,6 +71,10 @@ public class Databaze {
     }
 
     public void vypsatStatistiky() {
+        if (prvkyDatabaze.isEmpty()) {
+            System.out.println("Databáze je prázdná, nejsou k dispozici žádné statistiky.");
+            return;
+        }
         int spatnychS = 0;
         int prumernychS = 0;
         int dobrychS = 0;
@@ -99,18 +103,20 @@ public class Databaze {
             }
 
             int maximumU = Math.max(dobrychS, Math.max(prumernychS, spatnychS));
-            if (maximumU == dobrychS) {
-                System.out.println("Převažující kvalita spolupráce je dobrá.");
-            } else if (maximumU == prumernychS) {
-                System.out.println("Převažující kvalita spolupráce je průměrná.");
-            } else if (maximumU == spatnychS) {
-                System.out.println("Převažující kvalita spolupráce je špatná.");
+            
+            if (maximumU == 0) {
+            System.out.println("V databázi zatím nejsou zaznamenány žádné spolupráce.");
+            } else {
+                if (maximumU == dobrychS) {
+                    System.out.println("Převažující kvalita spolupráce je dobrá.");
+                } else if (maximumU == prumernychS) {
+                    System.out.println("Převažující kvalita spolupráce je průměrná.");
+                } else if (maximumU == spatnychS) {
+                    System.out.println("Převažující kvalita spolupráce je špatná.");
+                }
             }
-
-            if (nejviceS != null) {
-                System.out.println("Nejvíce vazeb má zaměstnanec " + nejviceS.getJmeno() + " " + nejviceS.getJmeno() + " (celkem " + maxPocetS + " vazeb).");
-            }
-        }
+            if (nejviceS != null && maxPocetS > 0) {
+                System.out.println("Nejvíce vazeb má zaměstnanec " + nejviceS.getJmeno() + " " + nejviceS.getPrijmeni() + " (celkem " + maxPocetS + " vazeb).");
     }
     public Map<Integer, Zamestnanec> getPrvkyDatabaze() {
     return prvkyDatabaze;
