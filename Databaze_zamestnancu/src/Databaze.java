@@ -112,4 +112,16 @@ public class Databaze {
             }
         }
     }
+    public Map<Integer, Zamestnanec> getPrvkyDatabaze() {
+    return prvkyDatabaze;
+    }
+    
+    public void nahratZeZalohy(int id, Zamestnanec z) {
+        z.setId(id);
+        prvkyDatabaze.put(id, z);
+        if (id >= posledniId) {
+            posledniId = id + 1;
+        }
+    }
+    
 }
