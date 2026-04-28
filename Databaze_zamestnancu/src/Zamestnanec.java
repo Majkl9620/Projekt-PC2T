@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.ArrayList implements java.io.Serializable;
 
 public abstract class Zamestnanec {
     private int id;
