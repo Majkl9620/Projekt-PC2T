@@ -18,7 +18,11 @@ public class SpravceSQL {
 
     public void odpojit() {
         if (conn != null) {
-            try { conn.close(); } catch (SQLException e) { System.out.println(e.getMessage()); }
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -32,16 +36,9 @@ public class SpravceSQL {
     }
 
     public void ulozZalohu(Map<Integer, Zamestnanec> databaze) {
-        try {
-            Statement stmt = conn.createStatement();
+        try (Statement stmt = conn.createStatement(); PreparedStatement psZam = conn.prepareStatement("INSERT INTO zamestnanci(id, typ, jmeno, prijmeni, rok_narozeni) VALUES(?,?,?,?,?)"); PreparedStatement psSpol = conn.prepareStatement("INSERT INTO spoluprace(id_zamestnance, id_kolegy, kvalita) VALUES(?,?,?)")) {
             stmt.execute("DELETE FROM spoluprace");
             stmt.execute("DELETE FROM zamestnanci");
-
-            String sqlZam = "INSERT INTO zamestnanci(id, typ, jmeno, prijmeni, rok_narozeni) VALUES(?,?,?,?,?)";
-            PreparedStatement psZam = conn.prepareStatement(sqlZam);
-
-            String sqlSpol = "INSERT INTO spoluprace(id_zamestnance, id_kolegy, kvalita) VALUES(?,?,?)";
-            PreparedStatement psSpol = conn.prepareStatement(sqlSpol);
 
             for (Zamestnanec z : databaze.values()) {
                 psZam.setInt(1, z.getId());
@@ -53,8 +50,8 @@ public class SpravceSQL {
 
                 for (Spoluprace s : z.getSpoluprace()) {
                     psSpol.setInt(1, z.getId());
-                    psSpol.setInt(2, s.getZamestnanec().getId());
-                    psSpol.setString(3, s.getKvalitaSpoluprace().name());
+                    psSpol.setInt(2, s.zamestnanec().getId());
+                    psSpol.setString(3, s.kvalitaSpoluprace().name());
                     psSpol.executeUpdate();
                 }
             }
@@ -65,10 +62,9 @@ public class SpravceSQL {
     }
 
     public void nactiZalohu(Databaze db) {
-        try {
-            Statement stmt = conn.createStatement();
-            
-            ResultSet rsZ = stmt.executeQuery("SELECT * FROM zamestnanci");
+        try (Statement stmtZ = conn.createStatement(); Statement stmtS = conn.createStatement()) {
+            ResultSet rsZ = stmtZ.executeQuery("SELECT * FROM zamestnanci");
+
             while (rsZ.next()) {
                 int id = rsZ.getInt("id");
                 String typ = rsZ.getString("typ");
@@ -81,16 +77,17 @@ public class SpravceSQL {
             }
 
 
-            ResultSet rsS = stmt.executeQuery("SELECT * FROM spoluprace");
+            ResultSet rsS = stmtS.executeQuery("SELECT * FROM spoluprace");
             while (rsS.next()) {
                 int idZ = rsS.getInt("id_zamestnance");
                 int idK = rsS.getInt("id_kolegy");
                 KvalitaSpoluprace kvalita = KvalitaSpoluprace.valueOf(rsS.getString("kvalita"));
-               
+
                 db.pridatSpolupraci(idZ, idK, kvalita);
             }
             System.out.println("Data z SQL zálohy byla úspěšně načtena.\n");
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

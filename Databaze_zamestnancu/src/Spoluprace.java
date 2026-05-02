@@ -1,17 +1,4 @@
-public class Spoluprace implements java.io.Serializable{
-    private final Zamestnanec zamestnanec;
-    private final KvalitaSpoluprace kvalitaSpoluprace;
+import java.io.Serializable;
 
-    public Spoluprace(Zamestnanec zamestnanec, KvalitaSpoluprace kvalitaSpoluprace) {
-        this.zamestnanec = zamestnanec;
-        this.kvalitaSpoluprace = kvalitaSpoluprace;
-    }
-
-    public Zamestnanec getZamestnanec() {
-        return zamestnanec;
-    }
-
-    public KvalitaSpoluprace getKvalitaSpoluprace() {
-        return kvalitaSpoluprace;
-    }
+public record Spoluprace(Zamestnanec zamestnanec, KvalitaSpoluprace kvalitaSpoluprace) implements Serializable {
 }

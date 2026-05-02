@@ -18,14 +18,14 @@ public class Main {
         return vstup;
     }
 
-public static void main(String[] args) {
+    static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Databaze databazeZamestnancu = new Databaze();
         int volba;
         int podVolba;
         boolean run = true;
         SpravceSQL sql = new SpravceSQL();
-        if(sql.pripojit()) {
+        if (sql.pripojit()) {
             sql.nactiZalohu(databazeZamestnancu);
         }
         while (run) {
@@ -38,7 +38,9 @@ public static void main(String[] args) {
             System.out.println("5 ... Spuštění dovednosti zaměstnance");
             System.out.println("6 ... Výpis zaměstnanců");
             System.out.println("7 ... Vypsat statistiky");
-            System.out.println("8 ... Ukončit program");
+            System.out.println("8 ... Uložit zaměstnance do souboru");
+            System.out.println("9 ... Načíst zaměstnance ze souboru");
+            System.out.println("10 ... Ukončit program");
 
             volba = pouzeCelaCisla(sc);
             switch (volba) {
@@ -95,7 +97,7 @@ public static void main(String[] args) {
                     break;
                 case 5:
                     System.out.print("Zadejte ID zaměstnance: ");
-                    databazeZamestnancu.getDovednost(pouzeCelaCisla(sc));
+                    databazeZamestnancu.spustitDovednost(pouzeCelaCisla(sc));
                     break;
                 case 6:
                     databazeZamestnancu.vypsatVsechnyZamestnance();
@@ -104,27 +106,29 @@ public static void main(String[] args) {
                     databazeZamestnancu.vypsatStatistiky();
                     break;
                 case 8:
-                    System.out.println("Ukládám data do SQL zálohy...");
-                    sql.ulozZalohu(databazeZamestnancu.getPrvkyDatabaze());
-                    sql.odpojit();
-                    run = false;
-                    break;
-                case 9:
                     System.out.print("Zadejte ID zaměstnance k uložení: ");
                     Zamestnanec ukladany = databazeZamestnancu.getZamestnanec(pouzeCelaCisla(sc));
                     if (ukladany != null) {
                         System.out.print("Zadejte název souboru (např. zamestnanec.dat): ");
-                        SpravceSouboru.ulozZamestnance(ukladany, sc.next());
+                        if (!SpravceSouboru.ulozZamestnance(ukladany, sc.next())) {
+                            System.out.println("Uložení do souboru selhalo.");
+                        }
                     } else {
                         System.out.println("Zaměstnanec nenalezen.");
                     }
                     break;
-                case 10:
+                case 9:
                     System.out.print("Zadejte název souboru pro načtení: ");
                     Zamestnanec nacteny = SpravceSouboru.nactiZamestnance(sc.next());
                     if (nacteny != null) {
                         databazeZamestnancu.nahratZeZalohy(nacteny.getId(), nacteny);
                     }
+                    break;
+                case 10:
+                    System.out.println("Ukládám data do SQL zálohy...");
+                    sql.ulozZalohu(databazeZamestnancu.getPrvkyDatabaze());
+                    sql.odpojit();
+                    run = false;
                     break;
             }
         }

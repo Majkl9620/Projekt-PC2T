@@ -8,14 +8,14 @@ public class BezpecnostniSpecialista extends Zamestnanec {
     @Override
     public void dovednost() {
         ArrayList<Spoluprace> specialistaS = getSpoluprace();
-        if(specialistaS.isEmpty()){
+        if (specialistaS.isEmpty()) {
             System.out.println(getJmeno() + " " + getPrijmeni() + " nemá spolupráce.");
             return;
         }
 
         int riziko = 0;
         for (Spoluprace s : specialistaS) {
-            switch (s.getKvalitaSpoluprace()) {
+            switch (s.kvalitaSpoluprace()) {
                 case SPATNA:
                     riziko += 4;
                     break;
@@ -27,7 +27,7 @@ public class BezpecnostniSpecialista extends Zamestnanec {
                     break;
             }
         }
-        riziko = riziko*getSpoluprace().size();
+        riziko = riziko * getSpoluprace().size();
         System.out.println("Riziko spolupráce je " + riziko + " bodů");
     }
 }

@@ -23,7 +23,7 @@ public class Databaze {
     public void odebratZamestnance(int id_z) {
         prvkyDatabaze.remove(id_z);
         for (Zamestnanec z : prvkyDatabaze.values()) {
-            z.getSpoluprace().removeIf(s -> s.getZamestnanec().getId() == id_z);
+            z.getSpoluprace().removeIf(s -> s.zamestnanec().getId() == id_z);
         }
     }
 
@@ -31,8 +31,13 @@ public class Databaze {
         return prvkyDatabaze.get(id_z);
     }
 
-    public void getDovednost(int id_z) {
-        prvkyDatabaze.get(id_z).dovednost();
+    public void spustitDovednost(int id_z) {
+        Zamestnanec z = prvkyDatabaze.get(id_z);
+        if (z == null) {
+            System.out.println("Zaměstnanec nenalezen");
+            return;
+        }
+        z.dovednost();
     }
 
     public void vypsatZamestnance(Zamestnanec z) {
@@ -41,7 +46,7 @@ public class Databaze {
         System.out.print("\tRok narození: " + z.getRok_narozeni());
         System.out.println("\nSpolupráce:\n");
         for (Spoluprace s : z.getSpoluprace()) {
-            System.out.println("\t" + s.getZamestnanec().getJmeno() + " " + s.getZamestnanec().getPrijmeni() + ": " + s.getKvalitaSpoluprace());
+            System.out.println("\t" + s.zamestnanec().getJmeno() + " " + s.zamestnanec().getPrijmeni() + ": " + s.kvalitaSpoluprace());
         }
     }
 
@@ -79,6 +84,7 @@ public class Databaze {
         int prumernychS = 0;
         int dobrychS = 0;
         int maxPocetS = 0;
+        int maximumU = 0;
         Zamestnanec nejviceS = null;
 
         for (Zamestnanec z : prvkyDatabaze.values()) {
@@ -89,7 +95,7 @@ public class Databaze {
             }
 
             for (Spoluprace s : z.getSpoluprace()) {
-                switch (s.getKvalitaSpoluprace()) {
+                switch (s.kvalitaSpoluprace()) {
                     case SPATNA:
                         spatnychS++;
                         break;
@@ -102,28 +108,29 @@ public class Databaze {
                 }
             }
 
-            int maximumU = Math.max(dobrychS, Math.max(prumernychS, spatnychS));
-            
-            if (maximumU == 0) {
+            maximumU = Math.max(dobrychS, Math.max(prumernychS, spatnychS));
+        }
+
+        if (maximumU == 0) {
             System.out.println("V databázi zatím nejsou zaznamenány žádné spolupráce.");
-            } else {
-                if (maximumU == dobrychS) {
-                    System.out.println("Převažující kvalita spolupráce je dobrá.");
-                } else if (maximumU == prumernychS) {
-                    System.out.println("Převažující kvalita spolupráce je průměrná.");
-                } else if (maximumU == spatnychS) {
-                    System.out.println("Převažující kvalita spolupráce je špatná.");
-                }
-            }
-            if (nejviceS != null && maxPocetS > 0) {
-                System.out.println("Nejvíce vazeb má zaměstnanec " + nejviceS.getJmeno() + " " + nejviceS.getPrijmeni() + " (celkem " + maxPocetS + "vazeb).");
-            }
+        } else {
+            if (maximumU == dobrychS) {
+                System.out.println("Převažující kvalita spolupráce je dobrá.");
+            } else if (maximumU == prumernychS) {
+                System.out.println("Převažující kvalita spolupráce je průměrná.");
+            } else if (maximumU == spatnychS) {
+                System.out.println("Převažující kvalita spolupráce je špatná.");
             }
         }
-    public Map<Integer, Zamestnanec> getPrvkyDatabaze() {
-    return prvkyDatabaze;
+        if (nejviceS != null && maxPocetS > 0) {
+            System.out.println("Nejvíce vazeb má zaměstnanec " + nejviceS.getJmeno() + " " + nejviceS.getPrijmeni() + " (celkem " + maxPocetS + "vazeb).");
+        }
     }
-    
+
+    public Map<Integer, Zamestnanec> getPrvkyDatabaze() {
+        return prvkyDatabaze;
+    }
+
     public void nahratZeZalohy(int id, Zamestnanec z) {
         z.setId(id);
         prvkyDatabaze.put(id, z);
@@ -131,5 +138,5 @@ public class Databaze {
             posledniId = id + 1;
         }
     }
-    
+
 }

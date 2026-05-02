@@ -1,12 +1,12 @@
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class Zamestnanec implements Serializable {
-    private int id;
     private final String jmeno;
     private final String prijmeni;
     private final int rok_narozeni;
     private final ArrayList<Spoluprace> spoluprace;
+    private int id;
 
     public Zamestnanec(String jmeno, String prijmeni, int rok_narozeni) {
         this.jmeno = jmeno;
@@ -35,11 +35,11 @@ public abstract class Zamestnanec implements Serializable {
         return rok_narozeni;
     }
 
-    public ArrayList<Spoluprace> getSpoluprace(){
+    public ArrayList<Spoluprace> getSpoluprace() {
         return spoluprace;
     }
 
-    public void pridatSpolupraci(Spoluprace s){
+    public void pridatSpolupraci(Spoluprace s) {
         spoluprace.add(s);
     }
 

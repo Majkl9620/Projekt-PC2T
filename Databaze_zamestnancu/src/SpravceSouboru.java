@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class SpravceSouboru {
-    
+
     public static boolean ulozZamestnance(Zamestnanec z, String nazevSouboru) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(nazevSouboru))) {
             oos.writeObject(z);
